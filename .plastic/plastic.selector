@@ -1,0 +1,4 @@
+repository "my arisia/my arisia@18968318592921@cloud"
+  path "/"
+    br "/main"
+    co "/main"
