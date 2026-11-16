@@ -4,18 +4,24 @@ using UnityEngine;
 namespace Npc.Movement
 {
     /// <summary>
-    /// A queryable set of PointOfInterests representing one logical area (a
-    /// camp, a dungeon room, a village quarter). Strategies ask this for
-    /// points; they never reach into the scene directly.
+    /// A queryable set of PointOfInterests representing one logical area.
+    /// Also defines a wander zone used by RandomWanderStrategySO via WanderRadius.
+    /// The two can coexist — a camp can have named points for duty-driven NPCs
+    /// and a wander radius for idle ones, sharing the same PointArea.
     /// </summary>
     public class PointArea : MonoBehaviour
     {
         [SerializeField] private List<PointOfInterest> points = new List<PointOfInterest>();
 
+        [SerializeField, Tooltip("Radius of the wander zone centered on this Transform. Used by RandomWanderStrategySO. Has no effect on FlagDrivenRouteSO.")]
+        private float wanderRadius;
+
+        public float WanderRadius => wanderRadius;
+
         /// <summary>
         /// Returns a random point matching the tag, or null if none found.
-        /// Multiple points with the same tag are intentional (e.g. three trees
-        /// all tagged "Forest") — the NPC visits a different one each time.
+        /// Multiple points sharing the same tag are intentional (three trees all
+        /// tagged "Forest") — a different one is picked each time.
         /// </summary>
         public PointOfInterest GetPointByTag(string tag)
         {
@@ -76,6 +82,47 @@ namespace Npc.Movement
                 points.Add(childPoints[i]);
             }
             Debug.Log($"PointArea '{name}': populated {points.Count} points from children.");
+        }
+
+        private void OnDrawGizmos()
+        {
+            if (wanderRadius <= 0f)
+            {
+                return;
+            }
+
+            // Wander zone — draw as a flat disc on the XZ plane
+            Gizmos.color = new Color(0.4f, 1f, 0.4f, 0.15f);
+            DrawFlatDisc(transform.position, wanderRadius, 32);
+
+            Gizmos.color = new Color(0.4f, 1f, 0.4f, 0.6f);
+            DrawFlatDiscOutline(transform.position, wanderRadius, 32);
+        }
+
+        private void DrawFlatDisc(Vector3 center, float radius, int segments)
+        {
+            float angleStep = 360f / segments;
+            Vector3 prev = center + new Vector3(radius, 0f, 0f);
+            for (int i = 1; i <= segments; i++)
+            {
+                float angle = i * angleStep * Mathf.Deg2Rad;
+                Vector3 next = center + new Vector3(Mathf.Cos(angle) * radius, 0f, Mathf.Sin(angle) * radius);
+                Gizmos.DrawLine(center, next);
+                prev = next;
+            }
+        }
+
+        private void DrawFlatDiscOutline(Vector3 center, float radius, int segments)
+        {
+            float angleStep = 360f / segments;
+            Vector3 prev = center + new Vector3(radius, 0f, 0f);
+            for (int i = 1; i <= segments; i++)
+            {
+                float angle = i * angleStep * Mathf.Deg2Rad;
+                Vector3 next = center + new Vector3(Mathf.Cos(angle) * radius, 0f, Mathf.Sin(angle) * radius);
+                Gizmos.DrawLine(prev, next);
+                prev = next;
+            }
         }
     }
 }

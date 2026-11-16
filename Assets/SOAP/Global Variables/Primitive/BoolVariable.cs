@@ -4,7 +4,7 @@ using UnityEngine.Serialization;
 namespace SOAP
 {
     [CreateAssetMenu(fileName = "New_BoolVariable", menuName = "SOAP/Global-Variable/Bool")]
-
+    [SOVariableLabel("Bool")]
     public class BoolVariable : ScriptableObject, ISerializationCallbackReceiver
     {
         [Header("Info")]

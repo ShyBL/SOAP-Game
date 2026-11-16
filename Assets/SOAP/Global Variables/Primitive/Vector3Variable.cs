@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace SOAP.Utility
 {
-    [CreateAssetMenu(fileName = "New_Vector3Variable", menuName = "Signals/Variables/Vector3")]
+    [CreateAssetMenu(fileName = "New_Vector3Variable", menuName = "SOAP/Global-Variable/Vector3")]
     public class Vector3Variable : ScriptableObject, ISerializationCallbackReceiver
     {
         [Header("Info")]
@@ -25,8 +25,6 @@ namespace SOAP.Utility
 
         [System.NonSerialized]
         public Vector3 previousValue;
-
-        public event System.Action<Vector3> OnValueChanged;
 
         public void OnAfterDeserialize() => currentValue = initialValue;
         public void OnBeforeSerialize() { }

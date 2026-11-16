@@ -22,7 +22,7 @@ namespace SOAP
             {
                 Debug.LogError($"GameChannel is missing on {name}!", this);
 #if UNITY_EDITOR
-                UnityEditor.EditorApplication.isPlaying = false;
+              //  UnityEditor.EditorApplication.isPlaying = false;
 #endif
             }
         }

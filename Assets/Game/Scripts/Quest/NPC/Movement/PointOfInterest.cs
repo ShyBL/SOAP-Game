@@ -14,11 +14,11 @@ namespace Npc.Movement
     {
         [SerializeField] private string pointTag;
 
-        [SerializeField, Tooltip("Seconds the NPC dwells here before asking for the next decision.")]
+        [SerializeField, Tooltip("Seconds the NPC dwells here before requesting the next decision.")]
         private float dwellSeconds = 2f;
 
-        [SerializeField, Tooltip("Cosmetic/gameplay hook - play an animation, spawn a particle, etc. " +
-                                  "State changes (flags) are handled by the strategy's RouteDecision, not here.")]
+        [SerializeField, Tooltip("Cosmetic/gameplay hook — play an animation, spawn a particle, etc. " +
+                                 "Flag mutations are handled by the strategy's RouteDecision, not here.")]
         private UnityEvent onArrival;
 
         public string PointTag => pointTag;

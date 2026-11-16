@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+using System;
+using UnityEngine;
 
 namespace SOAP
 {
@@ -14,12 +15,11 @@ namespace SOAP
         [Header("Value")]
         public string initialValue;
 
-        [System.NonSerialized] 
-        public string currentValue;
-        
-        [System.NonSerialized] 
-        public string previousValue;
-        
+        [NonSerialized] public string currentValue;
+        [NonSerialized] public string previousValue;
+
+        // Strings do not clamp — no clamping block.
+
         [Header("Reset")]
         public ValueReset valueReset = ValueReset.OnSingleSceneLoad;
 

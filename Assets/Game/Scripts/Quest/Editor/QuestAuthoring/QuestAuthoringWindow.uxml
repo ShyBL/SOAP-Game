@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:UXML
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ui="UnityEngine.UIElements"
+    xmlns:ue="UnityEditor.UIElements"
+    xsi:noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd">
+
+    <ui:VisualElement class="window-root">
+        <!-- Global Toolbar -->
+        <ue:Toolbar>
+            <ue:ToolbarButton text="Save Asset" name="toolbar-btn-save" />
+            <ue:ToolbarButton text="⚙ Settings" name="toolbar-btn-settings" />
+            <ui:VisualElement style="flex-grow: 1;" />
+            <ue:ToolbarSearchField name="toolbar-search" />
+        </ue:Toolbar>
+
+        <!-- Outer Vertical Split: Separates (Quests + Objectives + Properties) from (NPC Setup).
+             Bottom pane (NPC Setup) is the fixed-dimension one — it doesn't need to grow with
+             window height the way the three main panes do. -->
+        <ui:TwoPaneSplitView fixed-pane-index="1" fixed-pane-initial-dimension="180" orientation="vertical" class="split-view-container-vertical" style="flex-grow: 1;">
+
+            <!-- TOP HALF: original three-pane layout, unchanged -->
+            <ui:TwoPaneSplitView fixed-pane-index="0" fixed-pane-initial-dimension="400" orientation="horizontal" class="split-view-container">
+
+                <!-- Inner Split: Separates (Quests) from (Objectives) -->
+                <ui:TwoPaneSplitView fixed-pane-index="0" fixed-pane-initial-dimension="200" orientation="horizontal">
+
+                    <!-- PANE A: Quest Selector (macro) -->
+                    <ui:VisualElement name="pane-quests" class="pane-container">
+                        <ui:Label text="Quests" class="pane-header" />
+                        <ui:ListView name="quest-list-view" class="pane-content" />
+                        <ui:VisualElement style="flex-direction: row;">
+                            <ui:Button text="+ Add Quest" name="btn-add-quest" class="pane-footer-btn" style="flex-grow: 1;" />
+                            <ui:Button text="− Remove" name="btn-remove-quest" class="pane-footer-btn" style="flex-grow: 1;" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+
+                    <!-- PANE B: Objectives of the selected quest (hierarchy) -->
+                    <ui:VisualElement name="pane-objectives" class="pane-container">
+                        <ui:Label text="Objectives" class="pane-header" />
+                        <ui:ListView name="objective-list-view" class="pane-content" />
+                        <ui:VisualElement style="flex-direction: row;">
+                            <ui:Button text="+ Add Objective" name="btn-add-objective" class="pane-footer-btn" style="flex-grow: 1;" />
+                            <ui:Button text="− Remove" name="btn-remove-objective" class="pane-footer-btn" style="flex-grow: 1;" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+
+                </ui:TwoPaneSplitView>
+
+                <!-- PANE C: Property Inspector (quest or objective, whichever is selected deepest) -->
+                <ui:VisualElement name="pane-properties" class="pane-container">
+                    <ui:Label text="Properties" name="properties-header-label" class="pane-header" />
+                    <ui:ScrollView name="inspector-scroll-view" class="pane-content">
+                        <!-- InspectorElement is dynamically injected here via C# -->
+                    </ui:ScrollView>
+                </ui:VisualElement>
+
+            </ui:TwoPaneSplitView>
+
+            <!-- BOTTOM HALF: NPC Setup pane, spans full window width.
+                 Contents are entirely dynamic (built in C# from the current Pane A
+                 selection) — see QuestAuthoringWindow.RefreshNpcPane(). -->
+            <ui:VisualElement name="pane-npc" class="pane-container" style="border-right-width: 0;">
+                <ui:Label text="NPC Setup" class="pane-header" />
+                <ui:ScrollView name="npc-pane-content" class="pane-content">
+                    <!-- State-dependent content (placeholder label, create/assign flow,
+                         or mini-inspector + spawn button) is injected here via C# -->
+                </ui:ScrollView>
+            </ui:VisualElement>
+
+        </ui:TwoPaneSplitView>
+    </ui:VisualElement>
+</ui:UXML>

@@ -33,7 +33,7 @@ namespace SOAP
         [SerializeField] private IntVariable counter;
         [SerializeField] private int target;
         [SerializeField] private SetTextFromFloat hudLabel;
- 
+
         private void OnValidate()
         {
             if (counter == null)
@@ -41,7 +41,7 @@ namespace SOAP
             if (hudLabel == null)
                 Debug.LogError($"[ObjectiveTracker] HudLabel SetTextFromFloat is not assigned on {name}!", this);
         }
- 
+
         /// <summary>
         /// Called by the IntTopicResponder's onResponseTriggered when
         /// QuestObjectiveUpdated fires. Pushes the current count to the HUD.

@@ -3,13 +3,12 @@ using System.Collections.Generic;
 namespace Npc.Movement
 {
     /// <summary>
-    /// Per-NPC runtime state. This is what strategies READ to make decisions —
-    /// the "input" to the decision algorithm.
+    /// Per-NPC runtime state. This is what strategies READ to make decisions.
     ///
-    /// Flags are plain strings ("HasTimber", "HasRested") set or cleared when
-    /// the NPC arrives at a point, as specified by each RouteDecision. Keeping
-    /// them here (not on the SO) means multiple NPCs sharing the same strategy
-    /// asset each maintain their own independent state.
+    /// Flags are plain strings ("HasTimber", "JustFilled", "VisitedBag") set or
+    /// cleared when the NPC arrives at a point, as declared in each RouteDecision.
+    /// Kept here (not on the SO asset) so multiple NPCs sharing the same strategy
+    /// each maintain independent state.
     /// </summary>
     public class NpcMovementContext
     {

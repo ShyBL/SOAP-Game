@@ -4,6 +4,7 @@ using UnityEngine.Serialization;
 namespace SOAP
 {
     [CreateAssetMenu(fileName = "New_IntVariable", menuName = "SOAP/Global-Variable/Int")]
+    [SOVariableLabel("Counter")]
     public class IntVariable : ScriptableObject, ISerializationCallbackReceiver
     {
         [Header("Info")]

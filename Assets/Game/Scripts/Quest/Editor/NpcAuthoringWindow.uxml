@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ui:UXML
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ui="UnityEngine.UIElements"
+    xmlns:editor="UnityEditor.UIElements"
+    editor-extension-mode="True">
+
+    <!-- Linking both potential style names found in your project to ensure one catches -->
+    <Style src="project://database/Assets/Game/Scripts/Quest/Editor/QuestAuthoring/QuestAuthoringWindow.uss" />
+    <Style src="project://database/Assets/Game/Scripts/Quest/Editor/QuestAuthoring/AuthoringWindowStyle.uss" />
+
+    <!-- Inline flex-grow ensures the window doesn't collapse to 0 height -->
+    <ui:VisualElement class="window-root" style="flex-grow: 1; display: flex; width: 100%; height: 100%;">
+        
+        <!-- Outer Split: Separates (NPCs + Quests) from (Properties) -->
+        <ui:TwoPaneSplitView fixed-pane-index="0" fixed-pane-initial-dimension="300" orientation="horizontal" class="split-view-container" style="flex-grow: 1;">
+
+            <!-- Inner Split: Separates (NPCs) from (Quests/Spawning) -->
+            <ui:TwoPaneSplitView fixed-pane-index="0" fixed-pane-initial-dimension="250" orientation="horizontal" style="flex-grow: 1;">
+
+                <!-- PANE A: NPC Registry -->
+                <ui:VisualElement class="pane-container" style="flex-grow: 1; display: flex; flex-direction: column;">
+                    <ui:Label text="NPC Registry" class="pane-header" style="-unity-font-style: bold; padding: 6px; border-bottom-width: 1px;" />
+                    <ui:ListView name="pane-a-list" class="pane-content" style="flex-grow: 1;" />
+                    
+                    <!-- Action Row -->
+                    <ui:VisualElement style="flex-direction: row; padding: 4px;">
+                        <ui:Button text="+ Add NPC" name="btn-add-npc" class="pane-footer-btn" style="flex-grow: 1;" />
+                        <ui:Button text="− Remove" name="btn-remove-npc" class="pane-footer-btn" style="flex-grow: 1;" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+
+                <!-- PANE B: Quests & Spawning -->
+                <ui:VisualElement class="pane-container" style="flex-grow: 1; display: flex; flex-direction: column;">
+                    <ui:Label text="NPC Quests &amp; Scene" class="pane-header" style="-unity-font-style: bold; padding: 6px; border-bottom-width: 1px;" />
+                    <ui:ScrollView name="pane-b-content" class="pane-content" style="flex-grow: 1; padding: 4px;" />
+                </ui:VisualElement>
+
+            </ui:TwoPaneSplitView>
+
+            <!-- PANE C: Properties -->
+            <ui:VisualElement class="pane-container" style="flex-grow: 1; display: flex; flex-direction: column;">
+                <ui:Label text="NPC Properties" class="pane-header" style="-unity-font-style: bold; padding: 6px; border-bottom-width: 1px;" />
+                <ui:ScrollView name="pane-c-content" class="pane-content" style="flex-grow: 1; padding: 4px;" />
+            </ui:VisualElement>
+
+        </ui:TwoPaneSplitView>
+    </ui:VisualElement>
+</ui:UXML>
